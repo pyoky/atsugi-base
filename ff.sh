@@ -2,7 +2,8 @@
 echo "Options:"
 echo -e "- Download and run(d)"
 echo -e "- Run only (r)"
-echo -e "- Upload profile"
+echo -e "- Upload profile (u)"
+
 read OPTION
 case $OPTION in
 	d)
@@ -23,6 +24,11 @@ case $OPTION in
 	r)
 		./firefox.appimage --appimage-extract-and-run
 		;;
+	u)
+		cd $HOME
+		rm mozilla.zip
+		zip -r mozilla.zip .mozilla
+		./gdrive update 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg mozilla.zip
 	*)
 		echo "unknown"
 		;;
