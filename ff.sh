@@ -5,7 +5,9 @@ chmod +x ./gdrive
 ./gdrive about
 ./gdrive list
 ./gdrive download 1RespoMBLqUoo1lIu9osm3HHYWRHgIXQK
+# FIXME: why is the second download so slow?
 ./gdrive download 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg
 unzip mozilla.zip -d $HOME/
 chmod +x firefox.appimage
+# FIXME: start and restart for loading extensions
 ./firefox.appimage --appimage-extract-and-run
