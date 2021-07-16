@@ -1,10 +1,10 @@
 #!/bin/bash
 cd $HOME
-echo "Options:"
-echo -e "- Download and run(d)"
-echo -e "- Run only (r)"
-echo -e "- Upload profile (u)"
-
+echo -e "- Download and run (d)"
+echo -e "- Run only         (r)"
+echo -e "- Upload profile   (u)"
+echo -e "- Download vimrc   (v)"
+echo -n "            Option: "
 read OPTION
 case $OPTION in
 	d)
@@ -36,6 +36,9 @@ case $OPTION in
 		zip -r mozilla.zip .mozilla
 		./gdrive update 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg mozilla.zip
 		;;
+  v)
+    wget https://raw.githubusercontent.com/pyoky/ff/main/.vimrc
+    ;;
 	*)
 		echo "unknown"
 		;;
