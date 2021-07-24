@@ -18,18 +18,18 @@ case $OPTION in
 		# FIXME: why is the second download so slow?
 		./gdrive download 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg
 		unzip mozilla.zip -d $HOME/
-		chmod +x firefox.appimage
+		chmod +x ff.appimage
 		# start, wait for few seconds, kill, then restart. 
 		# This allows plugins to load 
-		./firefox.appimage --appimage-extract-and-run &
+		./ff.appimage --appimage-extract-and-run &
 		sleep 6
 		kill -KILL $(pgrep firefox-bin | awk '{print $1 }')
 		sleep 3
-		./firefox.appimage --appimage-extract-and-run &
+		./ff.appimage --appimage-extract-and-run &
 		;;
 
 	r)
-		./firefox.appimage --appimage-extract-and-run &
+		./ff.appimage --appimage-extract-and-run &
 		;;
 	u)
 		cd $HOME
