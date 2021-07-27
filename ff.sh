@@ -23,7 +23,7 @@ case $OPTION in
 		# This allows plugins to load 
 		./ff.appimage --appimage-extract-and-run &
 		sleep 6
-		kill -KILL $(pgrep firefox-bin | awk '{print $1 }')
+		kill -KILL $(pgrep ff-bin | awk '{print $1 }')
 		sleep 3
 		./ff.appimage --appimage-extract-and-run &
 		;;
