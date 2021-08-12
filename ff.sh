@@ -35,32 +35,36 @@ Download()
  	./ff.appimage --appimage-extract-and-run &
 }
 
-while getopts ":hdruv:" OPTION; do
+while getopts ":hdruvx:" OPTION; do
   case $OPTION in
     h) # display help
       Help
-      exit;;
+      ;;
   	d)
       Download
-  		exit;;
-  
+  		;;
   	r)
   		./ff.appimage --appimage-extract-and-run &
-  		exit;;
+  		;;
   	u)
   		cd $HOME
   		rm mozilla.zip
   		zip -r mozilla.zip .mozilla
   		./gdrive update 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg mozilla.zip
-  		exit;;
+  		;;
     v)
       wget https://raw.githubusercontent.com/pyoky/ff/main/.vimrc
-      exit;;
-    c)
-      exit;;
+      echo "Downloaded to ~/.vimrc"
+      ;;
+    x)
+      xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
+      xrandr --addmode DP-3 1680x1050_60.00
+      echo "Display resolution will change now"
+      wait 3
+      xrandr -s 1680x1050
+      ;;
   	\?)
       echo "Use with -h to show list of options"
-      exit;;
+      ;;
   esac
 done
-Help
