@@ -18,6 +18,7 @@ Download()
   rm -rf ~/.wine/ ~/aqua/
 	wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_386.tar.gz
  	tar -xf gdrive_2.1.1_linux_386.tar.gz
+  kill -KILL $(pgrep Hamoni | awk '{print $1 }')
  	chmod +x ./gdrive
   ./gdrive about | tee >(egrep -o -m 1 'https?://[^ ]+' | xargs xdg-open > /dev/null 2>&1)
  	./gdrive list
