@@ -29,11 +29,11 @@ Download()
  	chmod +x ff.appimage
  	# start, wait for few seconds, kill, then restart. 
  	# This allows plugins to load 
- 	./ff.appimage --appimage-extract-and-run &
+	nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
  	sleep 6
  	kill -KILL $(pgrep ff-bin | awk '{print $1 }')
  	sleep 3
- 	./ff.appimage --appimage-extract-and-run &
+	nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
 }
 
 while getopts ":hdruvx:" OPTION; do
@@ -45,7 +45,7 @@ while getopts ":hdruvx:" OPTION; do
       Download
   		;;
   	r)
-  		./ff.appimage --appimage-extract-and-run &
+		nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
   		;;
   	u)
   		cd $HOME
