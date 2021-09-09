@@ -13,7 +13,7 @@ Help()
   echo "Usage: (-h|d|r|u|v)"
 }
 
-Download()
+DownloadFF()
 {
   rm -rf ~/.wine/ ~/aqua/
 	wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_386.tar.gz
@@ -35,35 +35,67 @@ Download()
  	sleep 3
 	nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
 }
+UploadFF()
+{
+	cd $HOME
+  	rm mozilla.zip
+  	zip -r mozilla.zip .mozilla
+  	./gdrive update 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg mozilla.zip
+}
 
-while getopts ":hdruvx:" OPTION; do
+DownloadOB()
+{
+	cd ~/	
+	./gdrive download 10DPvbuzLfaNcF5TrrJ3Un-_ALvnl4ice
+	./gdrive download 16ygpJ2yxsoPC7c3ft74p0Kyfc4fo0Juj
+    unzip obsidian.zip -d /
+	unzip projectLife.zip -d $HOME/
+
+	cd /tmp
+	wget https://github.com/obsidianmd/obsidian-releases/releases/download/v0.12.15/Obsidian-0.12.15.AppImage
+	chmod +x Obsidian-0.12.15.AppImage
+	./Obsidian-0.12.15.AppImage --appimage-extract-and-run --no-sandbox
+
+	cd ~/
+
+}
+UploadOB()
+{
+	cd ~/
+	zip -r obsidian.zip ~/.config/obsidian/
+	zip -r projectLife.zip 'Project Life'
+	./gdrive update 10DPvbuzLfaNcF5TrrJ3Un-_ALvnl4ice projectLife.zip
+	./gdrive update 16ygpJ2yxsoPC7c3ft74p0Kyfc4fo0Juj obsidian.zip
+}
+
+while getopts ":hdruvb:" OPTION; do
   case $OPTION in
     h) # display help
       Help
       ;;
   	d)
-      Download
+      DownloadFF;
+	  DownloadOB
   		;;
   	r)
 		nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
   		;;
   	u)
-  		cd $HOME
-  		rm mozilla.zip
-  		zip -r mozilla.zip .mozilla
-  		./gdrive update 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg mozilla.zip
+  		UploadFF;
+		UploadOB
   		;;
     v)
       wget https://raw.githubusercontent.com/pyoky/ff/main/.vimrc
       echo "Downloaded to ~/.vimrc"
       ;;
-    x)
-      xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
-      xrandr --addmode DP-3 1680x1050_60.00
-      echo "Display resolution will change now"
-      wait 3
-      xrandr -s 1680x1050
-      ;;
+    # x)
+    #   xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
+    #   xrandr --addmode DP-3 1680x1050_60.00
+    #   echo "Display resolution will change now"
+    #   wait 3
+    #   xrandr -s 1680x1050
+    #   ;;
+	
   	\?)
       echo "Use with -h to show list of options"
       ;;
