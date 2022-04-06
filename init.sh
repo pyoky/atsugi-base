@@ -81,7 +81,7 @@ DownloadVS()
 UploadVS()
 {
 	cd ~/
-	zip -r vsext.zip ~/vscode/extensions/
+	zip -r vsext.zip .vscode
 	./gdrive update 1lWvDzguUoUmESYW-mc-bOtGePwTeU6cy vsext.zip
 }
 
