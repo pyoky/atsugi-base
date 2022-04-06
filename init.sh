@@ -67,6 +67,24 @@ UploadOB()
 	./gdrive update 10DPvbuzLfaNcF5TrrJ3Un-_ALvnl4ice projectLife.zip
 	./gdrive update 16ygpJ2yxsoPC7c3ft74p0Kyfc4fo0Juj obsidian.zip
 }
+DownloadVS()
+{
+	cd ~/	
+
+	./gdrive download 1lWvDzguUoUmESYW-mc-bOtGePwTeU6cy
+	./gdrive download 1DBNXstHxfDJ7dCEMO5RWt1nYzs6fBk6b
+    unzip vsext.zip -d /
+
+	cd ~/
+
+}
+UploadVS()
+{
+	cd ~/
+	zip -r vsext.zip ~/vscode/extensions/
+	./gdrive update 1lWvDzguUoUmESYW-mc-bOtGePwTeU6cy vsext.zip
+}
+
 
 while getopts ":hdruvb:" OPTION; do
   case $OPTION in
@@ -75,14 +93,14 @@ while getopts ":hdruvb:" OPTION; do
       ;;
   	d)
       DownloadFF;
-	  DownloadOB
+	  DownloadVS
   		;;
   	r)
 		nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
   		;;
   	u)
   		UploadFF;
-		UploadOB
+		UploadVS
   		;;
     v)
       wget https://raw.githubusercontent.com/pyoky/ff/main/.vimrc
