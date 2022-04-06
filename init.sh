@@ -74,6 +74,8 @@ DownloadVS()
 	./gdrive download 1lWvDzguUoUmESYW-mc-bOtGePwTeU6cy
 	./gdrive download 1DBNXstHxfDJ7dCEMO5RWt1nYzs6fBk6b
     unzip -o vsext.zip
+	mkdir ~/.ssh
+	mv config ~/.ssh/
 
 	cd ~/
 
