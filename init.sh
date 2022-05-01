@@ -15,25 +15,29 @@ Help()
 
 DownloadFF()
 {
+	GREEN='\032[0;32m'
+	NC='\033[0m' # No Color
   rm -rf ~/.wine/ ~/aqua/
 	wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_386.tar.gz
  	tar -xf gdrive_2.1.1_linux_386.tar.gz
-  kill -KILL $(pgrep Hamoni | awk '{print $1 }')
+  	kill -KILL $(pgrep Hamoni | awk '{print $1 }')
  	chmod +x ./gdrive
-  ./gdrive about | tee >(egrep -o -m 1 'https?://[^ ]+' | xargs xdg-open > /dev/null 2>&1)
- 	./gdrive list
+  	# ./gdrive about | tee >(egrep -o -m 1 'https?://[^ ]+' | xargs xdg-open > /dev/null 2>&1)
  	./gdrive download 1RespoMBLqUoo1lIu9osm3HHYWRHgIXQK
  	# FIXME: why is the second download so slow?
  	./gdrive download 1nuDAWIF4JTVQFYa_a4WuJ00vB1qdegKg
- 	unzip mozilla.zip -d $HOME/
+ 	./gdrive download 18cnJwY5Q69GnYkQ2s5xvq9yVCZ8ixyqi
+	echo -e "${RED}extracting mozilla.zip${NC}"
+ 	unzip mozilla.zip -d $HOME/ > /dev/null
  	chmod +x ff.appimage
  	# start, wait for few seconds, kill, then restart. 
  	# This allows plugins to load 
 	nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
- 	sleep 6
- 	kill -KILL $(pgrep ff-bin | awk '{print $1 }')
+ 	sleep 3
+ 	kill -KILL $(pgrep firefox-bin | awk '{print $1 }')
  	sleep 3
 	nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
+	rm "mozilla.zip" "gdrive_2.1.1_linux_386.tar.gz"
 }
 UploadFF()
 {
@@ -73,7 +77,7 @@ DownloadVS()
 
 	./gdrive download 1lWvDzguUoUmESYW-mc-bOtGePwTeU6cy
 	./gdrive download 1DBNXstHxfDJ7dCEMO5RWt1nYzs6fBk6b
-    unzip -o vsext.zip
+    unzip -o vsext.zip > /dev/null
 	mkdir ~/.ssh
 	mv config ~/.ssh/
 
@@ -94,8 +98,14 @@ while getopts ":hdruvb:" OPTION; do
       Help
       ;;
   	d)
-      DownloadFF;
-	  DownloadVS
+      	DownloadFF;
+	DownloadVS;
+	mv wallpaper.jpg /tmp/
+	dconf write /org/cinnamon/desktop/wm/preferences/theme "'Mint-Y-Dark'"
+	dconf write /org/cinnamon/desktop/background/picture-uri "'file:///tmp/wallpaper.jpg'"
+	dconf write /org/cinnamon/desktop/interface/gtk-theme "'Mint-Y-Dark'"
+	echo "Opening SSH Tunnel..."
+	ssh -N -D 1337 atsugi
   		;;
   	r)
 		nohup ./ff.appimage --appimage-extract-and-run > /dev/null 2>&1 &
