@@ -1,19 +1,22 @@
 #!/bin/bash
 cd $HOME
-#echo -e "- Download and run (d)"
-#echo -e "- Run only         (r)"
-#echo -e "- Upload profile   (u)"
-#echo -e "- Download vimrc   (v)"
-#echo -n "            Option: "
-#read OPTION
+
 
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 Help()
 {
-  # Display Help
-  echo "Usage: (h|d|r|u|v)"
+	# Display Help
+	echo -e "${GREEN}Usage: init.sh -[OPTIONS]"
+	echo -e "OPTIONS:"
+	echo -e "- Download and run (d)"
+	echo -e "- Run only         (r)"
+	echo -e "- Upload profile   (u)"
+	echo -e "- Download vimrc   (v)"
+	echo -e "- Change resolution(x)"
+	echo -e "- Customized KDE   (k)"
+	echo -e "- Start SSH Proxy  (s)"
 }
 
 DownloadFF()
@@ -142,14 +145,15 @@ while [[ -n "$1" ]]; do
 		exit
   		;;
 	-v)
-    	wget https://raw.githubusercontent.com/pyoky/ff/main/.vimrc
-  	    echo "Downloaded to ~/.vimrc"
+		git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+		sh ~/.vim_runtime/install_awesome_vimrc.sh
+ 	    echo "${GREEN}Downloaded to ~/.vimrc${NC}"
 	    exit
   	    ;;
     x)
        xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
        xrandr --addmode DP-3 1680x1050_60.00
-       echo "Display resolution will change now"
+       echo "${GREEN}Display resolution will change now${NC}"
        wait 3
        xrandr -s 1680x1050
 	   exit
@@ -162,9 +166,6 @@ while [[ -n "$1" ]]; do
 	    KDEConf
 		exit
 		;;
-  	*)
-	    echo "Use with -h to show list of options"
-	    exit 1
-	    ;;
   esac
 done
+Help
